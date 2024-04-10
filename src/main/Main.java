@@ -1,10 +1,11 @@
 package main;
 
-//import static main.Input.Input.*;
 import main.arbolesbinarios.Nodo;
 import static main.Input.Input.*;
 import static main.arbolesbinarios.ArbolBinario.*;
-import static main.Input.Mensajes.*;
+import static main.metodos.Mensajes.*;
+import static main.Input.Estilos.*;
+
 public class Main {
 
     public static Nodo raiz = null;
@@ -22,16 +23,28 @@ public class Main {
                 case 1 -> crearArbol();
 
                 case 2 ->{ 
-                    int dato = inputInt("Ingrese el dato a insertar");
+
+                    if(!existeArbol()){
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+                    String nombre = input("Ingrese el nombre");
+                    int saldo = inputInt("Ingrese el saldo");
 
                     Nodo auxiliar = raiz;
                     Nodo nuevoNodo = new Nodo();
-                    nuevoNodo.dato = dato;
+                    nuevoNodo.nombre = nombre;
+                    nuevoNodo.saldo = saldo;
 
-                    insertar(dato, nuevoNodo, auxiliar);
+                    insertarOrdenadoPorNombres(nombre,saldo, nuevoNodo, auxiliar);
                 }
                 
-                case 3 -> imprimirInOrder(raiz,0);
+                case 3 -> {
+                    System.out.println(blue("┌── ") + "Arbol binario" + blue(" ──"));
+                    imprimirNombresInOrder(raiz,0,false);
+                } 
+                
 
                 default -> {
                     mostrarError("opcion invalida");

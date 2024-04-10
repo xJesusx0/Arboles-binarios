@@ -1,7 +1,7 @@
 package main.Input;
 
 import static main.Input.Estilos.*;
-import static main.Input.Mensajes.*;
+import static main.metodos.Mensajes.*;
 
 import java.util.Scanner;
 

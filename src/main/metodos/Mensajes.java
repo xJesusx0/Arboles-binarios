@@ -1,4 +1,4 @@
-package main.Input;
+package main.metodos;
 import static main.Input.Estilos.*;
 
 public class Mensajes {
