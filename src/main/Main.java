@@ -80,13 +80,49 @@ public class Main {
                 } 
                 
                 case 8 -> {
+
+                    if (!existeArbol()) {
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
                     mostrarEstado("Se eliminaran los siquientes nodos");
                     imprimirNodosHoja(raiz, 0);
                     
-                    mostrarEstado("Eliminando nodos...");
                     eliminarNodosHoja(null,raiz);
 
                     mostrarEstado("Nodos eliminados correctamente");
+                }
+
+                case 9 -> {
+
+                    if (!existeArbol()) {
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+
+                    int contador[] = {1};
+                    cantidadNodos(raiz, contador);
+                    System.out.println(cyan("Cantidad de nodos (incluyendo la raiz): ") + contador[0]);
+                }
+
+                case 10 -> {
+
+                    if (!existeArbol()) {
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+                    //contador[0] es la cantidad de nodos a la izquierda y contador[1] es la cantidad a la derecha
+                    int contadores[] = {0,0};
+
+                    cantidadNodosIzquierdaYDerecha(raiz, contadores);
+
+                    System.out.println(bold(cyan("┌─── Cantidad de nodos ───")));
+                    System.out.println(bold(cyan("├─ izquierda: ") + contadores[0]));
+                    System.out.println(bold(cyan("├─ Derecha: ") + contadores[1]));
+                    System.out.println(bold(cyan("└─────────────────────────")));
                 }
 
                 default -> {

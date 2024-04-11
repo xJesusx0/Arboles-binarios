@@ -220,14 +220,11 @@ public class ArbolBinario {
     }
 
     public static void eliminarNodosHoja(Nodo padre,Nodo nodo) {
-        if (!existeArbol()) {
-            mostrarError("El arbol no ha sido creado");
-            return;
-        }
-
+        
         if (nodo == null) {
             return;
         }
+
 
         if(nodo.nodoIzquierdo == null && nodo.nodoDerecho == null){
 
@@ -254,5 +251,51 @@ public class ArbolBinario {
         eliminarNodosHoja(nodo, nodo.nodoIzquierdo);
         eliminarNodosHoja(nodo, nodo.nodoDerecho);
 
+    }
+
+    public static void cantidadNodosIzquierdaYDerecha(Nodo nodo,int contadores[]){
+
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if(nodo == null){
+            return;
+        }
+
+        if(nodo.nodoIzquierdo != null){
+            contadores[0]++;
+            cantidadNodosIzquierdaYDerecha(nodo.nodoIzquierdo,contadores);
+
+        }
+
+        if(nodo.nodoDerecho != null){
+            contadores[1]++;
+            cantidadNodosIzquierdaYDerecha(nodo.nodoDerecho,contadores);
+        }
+    }
+
+    public static void cantidadNodos(Nodo nodo,int contador[]){
+
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if(nodo == null){
+            return;
+        }
+
+        if(nodo.nodoIzquierdo != null){
+            contador[0]++;
+            cantidadNodos(nodo.nodoIzquierdo,contador);
+
+        }
+
+        if(nodo.nodoDerecho != null){
+            contador[0]++;
+            cantidadNodos(nodo.nodoDerecho,contador);
+        }
     }
 }

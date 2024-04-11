@@ -25,6 +25,7 @@ public class Mensajes {
                             "Imprimir nodos hoja",
                             "imprimir forma de arbol",
                             "Eliminar nodos hoja",
+                            "Ver cantidad de nodos",
                             "Ver cuantos nodos hay a la izquierda y a la derecha"
                         };
 
