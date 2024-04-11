@@ -24,6 +24,7 @@ public class ArbolBinario {
         mostrarAviso("Estas configurando el nodo raiz");
         raiz.nombre = input("Ingrese el nombre");
         raiz.saldo = inputInt("Ingrese el saldo");
+        raiz.grado = 0;
     }
 
     public static void insertarOrdenadoPorSaldo(String nombre, int dato, Nodo nuevoNodo, Nodo auxiliar) {
@@ -63,6 +64,7 @@ public class ArbolBinario {
         if (esMenor(nombre, auxiliar.nombre)) {
             if (auxiliar.nodoIzquierdo == null) {
                 auxiliar.nodoIzquierdo = nuevoNodo;
+                auxiliar.grado++;
                 return;
             }
             auxiliar = auxiliar.nodoIzquierdo;
@@ -72,6 +74,7 @@ public class ArbolBinario {
         if (esMayor(nombre, auxiliar.nombre)) {
             if (auxiliar.nodoDerecho == null) {
                 auxiliar.nodoDerecho = nuevoNodo;
+                auxiliar.grado++;
                 return;
             }
 
@@ -183,16 +186,7 @@ public class ArbolBinario {
         
         imprimirNombresPosOrden(nodo.nodoDerecho);
 
-        System.out.print(green("[ "));
-
-        if (nodo == raiz) {
-            System.out.print(nodo.nombre + yellow(" (Raiz)"));
-
-        } else {
-            System.out.print("Nombre: " + nodo.nombre + " ");
-        }
-
-        System.out.print(green(" ]"));
+        imprimirNodo(nodo);
     }
 
     public static void imprimirNodosHoja(Nodo nodo,int nivel) {
@@ -219,6 +213,8 @@ public class ArbolBinario {
 
     }
 
+    public static int confirmacion = 0;
+
     public static void eliminarNodosHoja(Nodo padre,Nodo nodo) {
         
         if (nodo == null) {
@@ -230,22 +226,27 @@ public class ArbolBinario {
 
             if(nodo == raiz){
                 mostrarAviso("Esta seguro que desea eliminar el nodo raiz?");
-                int confirmacion = inputInt("(1 = si / cualquier otro numero = no)");
+                confirmacion = inputInt("(1 = si / cualquier otro numero = no)");
 
                 if(confirmacion != 1){
                     return;
                 }
-
+                
                 raiz = null;
+                return;
             }
 
-            if (padre != null) {
-                if (padre.nodoIzquierdo == nodo) {
-                    padre.nodoIzquierdo = null;
-                } else if (padre.nodoDerecho == nodo) {
-                    padre.nodoDerecho = null;
-                }
+            if (padre.nodoIzquierdo == nodo) {
+                padre.grado--;
+                padre.nodoIzquierdo = null;
+                
+
+            } else if (padre.nodoDerecho == nodo) {
+                padre.grado--;
+                padre.nodoDerecho = null;
+
             }
+            
         }
 
         eliminarNodosHoja(nodo, nodo.nodoIzquierdo);
@@ -286,16 +287,75 @@ public class ArbolBinario {
         if(nodo == null){
             return;
         }
+        
+        contador[0]++;
+            
+        cantidadNodos(nodo.nodoIzquierdo,contador);
+    
+        cantidadNodos(nodo.nodoDerecho,contador);
+        
+    }
 
-        if(nodo.nodoIzquierdo != null){
-            contador[0]++;
-            cantidadNodos(nodo.nodoIzquierdo,contador);
-
+    public static void buscarNombre(String nombre,Nodo nodo){
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
         }
 
-        if(nodo.nodoDerecho != null){
-            contador[0]++;
-            cantidadNodos(nodo.nodoDerecho,contador);
+        if (nodo == null) {
+            return;
         }
+
+        if(esIgual(nombre, nodo.nombre)){
+            mostrarEstado("Nombre encontrado");
+            imprimirNodo(nodo);
+
+            return;
+        }
+
+        buscarNombre(nombre, nodo.nodoIzquierdo);
+        
+        buscarNombre(nombre, nodo.nodoDerecho);
+    }
+
+    public static void buscarSaldo(int saldo,Nodo nodo){
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if (nodo == null) {
+            return;
+        }
+
+        if(saldo == nodo.saldo){
+            mostrarEstado("Saldo encontrado");
+            imprimirNodo(nodo);
+        }
+
+        buscarSaldo(saldo, nodo.nodoIzquierdo);
+        
+        buscarSaldo(saldo, nodo.nodoDerecho);
+    }
+
+    public static void buscarGrado(int grado,Nodo nodo){
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if (nodo == null) {
+            return;
+        }
+
+        if(grado == nodo.grado){
+            mostrarEstado("Grado encontrado");
+
+            imprimirNodo(nodo);
+        }
+
+        buscarGrado(grado, nodo.nodoIzquierdo);
+        
+        buscarGrado(grado, nodo.nodoDerecho);
     }
 }

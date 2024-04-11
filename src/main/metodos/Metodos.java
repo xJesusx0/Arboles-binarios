@@ -10,4 +10,8 @@ public class Metodos {
         return (string1.compareTo(string2) > 0);       
                
     }
+
+    public static boolean esIgual(String string1, String string2){
+        return string1.equals(string2);
+    }
 }

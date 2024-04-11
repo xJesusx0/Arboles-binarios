@@ -15,7 +15,7 @@ public class Mensajes {
 
     }
 
-    public static final String opciones[] = {
+    public static String opciones[] = {
                             "Salir",
                             "Crear arbol",
                             "Insertar nodo",
@@ -26,11 +26,13 @@ public class Mensajes {
                             "imprimir forma de arbol",
                             "Eliminar nodos hoja",
                             "Ver cantidad de nodos",
-                            "Ver cuantos nodos hay a la izquierda y a la derecha"
+                            "Ver cuantos nodos hay a la izquierda y a la derecha",
+                            "Buscar por nombre",
+                            "Buscar por saldo",
+                            "Buscar por grado"
                         };
 
     public static void menu(){
-        System.out.println("");
         System.out.println(bold(cyan("────────────────────────┐")));
         System.out.println(bold(cyan("┌───────── Menu ────────┘")));
         

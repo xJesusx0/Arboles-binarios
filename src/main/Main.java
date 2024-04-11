@@ -71,6 +71,7 @@ public class Main {
 
                     imprimirNombresPosOrden(raiz);
                 }
+                
                 case 6 -> {
                     imprimirNodosHoja(raiz,0);
                 }
@@ -81,38 +82,27 @@ public class Main {
                 
                 case 8 -> {
 
-                    if (!existeArbol()) {
-                        mostrarError("El arbol no ha sido creado");
-                        break;
-                    }
-
-                    mostrarEstado("Se eliminaran los siquientes nodos");
                     imprimirNodosHoja(raiz, 0);
-                    
+                    mostrarEstado("Se eliminaran los siquientes nodos");
+
                     eliminarNodosHoja(null,raiz);
 
+                    if(confirmacion != 1){
+                        break;
+                    }
+                    
                     mostrarEstado("Nodos eliminados correctamente");
                 }
 
                 case 9 -> {
 
-                    if (!existeArbol()) {
-                        mostrarError("El arbol no ha sido creado");
-                        break;
-                    }
-
-
-                    int contador[] = {1};
+                    int contador[] = {0};
                     cantidadNodos(raiz, contador);
                     System.out.println(cyan("Cantidad de nodos (incluyendo la raiz): ") + contador[0]);
                 }
 
                 case 10 -> {
 
-                    if (!existeArbol()) {
-                        mostrarError("El arbol no ha sido creado");
-                        break;
-                    }
 
                     //contador[0] es la cantidad de nodos a la izquierda y contador[1] es la cantidad a la derecha
                     int contadores[] = {0,0};
@@ -123,6 +113,21 @@ public class Main {
                     System.out.println(bold(cyan("├─ izquierda: ") + contadores[0]));
                     System.out.println(bold(cyan("├─ Derecha: ") + contadores[1]));
                     System.out.println(bold(cyan("└─────────────────────────")));
+                }
+
+                case 11 -> {
+                    String nombre = input("Ingrese el nombre a buscar");
+                    buscarNombre(nombre, raiz);
+                }
+
+                case 12 -> {
+                    int saldo = inputInt("Ingrese el saldo a buscar");
+                    buscarSaldo(saldo, raiz);
+                }
+
+                case 13 -> {
+                    int grado = inputInt("Ingrese el grado a buscar");
+                    buscarGrado(grado, raiz);
                 }
 
                 default -> {
