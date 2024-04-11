@@ -5,16 +5,17 @@ import static main.metodos.Mensajes.*;
 import static main.Input.Input.*;
 import static main.metodos.Metodos.*;
 import static main.Input.Estilos.*;
+import static main.arbolesbinarios.Nodo.*;
 
 public class ArbolBinario {
-    
-    public static boolean existeArbol(){
+
+    public static boolean existeArbol() {
         return raiz != null;
     }
 
-    public static void crearArbol(){
+    public static void crearArbol() {
 
-        if(existeArbol()){
+        if (existeArbol()) {
             mostrarError("El arbol ya ha sido creado");
             return;
         }
@@ -25,109 +26,233 @@ public class ArbolBinario {
         raiz.saldo = inputInt("Ingrese el saldo");
     }
 
-    public static void insertarOrdenadoPorSaldo(String nombre,int dato, Nodo nuevoNodo, Nodo auxiliar){
+    public static void insertarOrdenadoPorSaldo(String nombre, int dato, Nodo nuevoNodo, Nodo auxiliar) {
 
-        if(!existeArbol()){
+        if (!existeArbol()) {
             mostrarError("El arbol no ha sido creado");
             return;
         }
-        
-        if(dato < auxiliar.saldo){
-            if(auxiliar.nodoIzquierdo == null){
+
+        if (dato < auxiliar.saldo) {
+            if (auxiliar.nodoIzquierdo == null) {
                 auxiliar.nodoIzquierdo = nuevoNodo;
                 return;
             }
             auxiliar = auxiliar.nodoIzquierdo;
-            insertarOrdenadoPorSaldo(nombre,dato, nuevoNodo, auxiliar);   
+            insertarOrdenadoPorSaldo(nombre, dato, nuevoNodo, auxiliar);
         }
-        
-        if(dato > auxiliar.saldo){
-            if(auxiliar.nodoDerecho == null){
+
+        if (dato > auxiliar.saldo) {
+            if (auxiliar.nodoDerecho == null) {
                 auxiliar.nodoDerecho = nuevoNodo;
                 return;
             }
 
             auxiliar = auxiliar.nodoDerecho;
-            insertarOrdenadoPorSaldo(nombre,dato, nuevoNodo, auxiliar); 
+            insertarOrdenadoPorSaldo(nombre, dato, nuevoNodo, auxiliar);
         }
     }
 
-    public static void insertarOrdenadoPorNombres(String nombre,int dato, Nodo nuevoNodo, Nodo auxiliar){
+    public static void insertarOrdenadoPorNombres(String nombre, int dato, Nodo nuevoNodo, Nodo auxiliar) {
 
-        if(!existeArbol()){
+        if (!existeArbol()) {
             mostrarError("El arbol no ha sido creado");
             return;
         }
-        
-        if(esMenor(nombre, auxiliar.nombre)){
-            if(auxiliar.nodoIzquierdo == null){
+
+        if (esMenor(nombre, auxiliar.nombre)) {
+            if (auxiliar.nodoIzquierdo == null) {
                 auxiliar.nodoIzquierdo = nuevoNodo;
                 return;
             }
             auxiliar = auxiliar.nodoIzquierdo;
-            insertarOrdenadoPorNombres(nombre,dato, nuevoNodo, auxiliar);   
+            insertarOrdenadoPorNombres(nombre, dato, nuevoNodo, auxiliar);
         }
-        
-        if(esMayor(nombre, auxiliar.nombre)){
-            if(auxiliar.nodoDerecho == null){
+
+        if (esMayor(nombre, auxiliar.nombre)) {
+            if (auxiliar.nodoDerecho == null) {
                 auxiliar.nodoDerecho = nuevoNodo;
                 return;
             }
 
             auxiliar = auxiliar.nodoDerecho;
-            insertarOrdenadoPorNombres(nombre,dato, nuevoNodo, auxiliar); 
+            insertarOrdenadoPorNombres(nombre, dato, nuevoNodo, auxiliar);
         }
     }
 
-    public static void imprimirSaldosInOrder(Nodo nodo, int nivel) {
+    public static void imprimirSaldosArbol(Nodo nodo, int nivel) {
 
-        if(!existeArbol()){
+        if (!existeArbol()) {
             mostrarError("El arbol no ha sido creado");
             return;
         }
 
-        if(nodo != null){
-            for (int i = 0; i < nivel; i++) {
-                System.out.print(" ");
-            }
+        if (nodo == null) {
+            return;
+        }
+
+        for (int i = 0; i < nivel; i++) {
+            System.out.print(" ");
+        }
+        System.out.print(blue("└── "));
+        System.out.println(nodo.saldo);
+
+        imprimirSaldosArbol(nodo.nodoDerecho, nivel + 1);
+
+        imprimirSaldosArbol(nodo.nodoIzquierdo, nivel + 1);
+
+    }
+
+    public static void imprimirNombresArbol(Nodo nodo, int nivel, boolean esIzquierdo) {
+
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if (nodo == null) {
+            return;
+        }
+
+        for (int i = 0; i < nivel; i++) {
+            System.out.print(cyan("-"));
+        }
+
+        if (nodo == raiz) {
+            System.out.println(blue("└┬─ ") + nodo.nombre + yellow(" (Raiz)"));
+
+        } else if (esIzquierdo) {
             System.out.print(blue("└── "));
-            System.out.println(nodo.saldo);
-            imprimirSaldosInOrder(nodo.nodoDerecho, nivel + 1);
-            
-            
-            imprimirSaldosInOrder(nodo.nodoIzquierdo, nivel + 1);
+            System.out.println(nodo.nombre + yellow(" (Izq)"));
+
+        } else {
+            System.out.print(blue("└── "));
+            System.out.println(nodo.nombre + yellow(" (Der)"));
         }
+
+        imprimirNombresArbol(nodo.nodoDerecho, nivel + 1, false);
+
+        imprimirNombresArbol(nodo.nodoIzquierdo, nivel + 1, true);
+
     }
-
-    public static void imprimirNombresInOrder(Nodo nodo, int nivel,boolean esIzquierdo) {
-
-        if(!existeArbol()){
+    
+    public static void imprimirNombresPreOrden(Nodo nodo){
+        if (!existeArbol()) {
             mostrarError("El arbol no ha sido creado");
             return;
         }
 
+        if(nodo == null){
+            return;
+        }
+
+        imprimirNodo(nodo);
+
+        imprimirNombresPreOrden(nodo.nodoIzquierdo);
+        imprimirNombresPreOrden(nodo.nodoDerecho);
+    }
+
+    public static void imprimirNombresInOrden(Nodo nodo){
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if(nodo == null){
+            return;
+        }
+
+        imprimirNombresInOrden(nodo.nodoIzquierdo);
+
+        imprimirNodo(nodo);
+
+        imprimirNombresInOrden(nodo.nodoDerecho);
+    }
+
+    public static void imprimirNombresPosOrden(Nodo nodo){
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if(nodo == null){
+            return;
+        }
+
+        imprimirNombresPosOrden(nodo.nodoIzquierdo);
         
-        if(nodo != null){
-            
-            for (int i = 0; i < nivel; i++) {
-                System.out.print(cyan("-"));
+        imprimirNombresPosOrden(nodo.nodoDerecho);
+
+        System.out.print(green("[ "));
+
+        if (nodo == raiz) {
+            System.out.print(nodo.nombre + yellow(" (Raiz)"));
+
+        } else {
+            System.out.print("Nombre: " + nodo.nombre + " ");
+        }
+
+        System.out.print(green(" ]"));
+    }
+
+    public static void imprimirNodosHoja(Nodo nodo,int nivel) {
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if (nodo == null) {
+            return;
+        }
+
+
+        if(nodo.nodoIzquierdo == null && nodo.nodoDerecho == null){
+            for(int i = 0 ; i < nivel ; i++){
+                System.out.print(green("-"));
             }
-            
+            System.out.println(nodo.nombre);
+        }
+
+        imprimirNodosHoja(nodo.nodoIzquierdo,nivel+1);
+        
+        imprimirNodosHoja(nodo.nodoDerecho,nivel+1);
+
+    }
+
+    public static void eliminarNodosHoja(Nodo padre,Nodo nodo) {
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if (nodo == null) {
+            return;
+        }
+
+        if(nodo.nodoIzquierdo == null && nodo.nodoDerecho == null){
 
             if(nodo == raiz){
-                System.out.println(blue("└┬─ ") + nodo.nombre + yellow(" (Raiz)"));
-            }else if (esIzquierdo) {
-                System.out.print(blue("└── "));
-                System.out.println(nodo.nombre + yellow(" (Izq)"));
-            } else {
-                System.out.print(blue("└── "));
-                System.out.println(nodo.nombre + yellow(" (Der)"));
+                mostrarAviso("Esta seguro que desea eliminar el nodo raiz?");
+                int confirmacion = inputInt("(1 = si / cualquier otro numero = no)");
+
+                if(confirmacion != 1){
+                    return;
+                }
+
+                raiz = null;
             }
 
-
-            imprimirNombresInOrder(nodo.nodoDerecho, nivel + 1,false);  
-            
-            imprimirNombresInOrder(nodo.nodoIzquierdo, nivel + 1,true);
+            if (padre != null) {
+                if (padre.nodoIzquierdo == nodo) {
+                    padre.nodoIzquierdo = null;
+                } else if (padre.nodoDerecho == nodo) {
+                    padre.nodoDerecho = null;
+                }
+            }
         }
+
+        eliminarNodosHoja(nodo, nodo.nodoIzquierdo);
+        eliminarNodosHoja(nodo, nodo.nodoDerecho);
+
     }
 }

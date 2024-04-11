@@ -17,6 +17,11 @@ public class Main {
             menu();
 
             byte eleccion = inputByte("Ingrese su opcion");
+
+            if( opciones.length > eleccion && eleccion > -1){
+                System.out.println(green("─── ") + "Arbol binario - " + green(opciones[eleccion]) + green(" ──"));
+            }
+
             switch (eleccion) {
 
                 case 0 -> mostrarAviso("Saliendo...");
@@ -41,10 +46,48 @@ public class Main {
                 }
                 
                 case 3 -> {
-                    System.out.println(blue("┌── ") + "Arbol binario" + blue(" ──"));
-                    imprimirNombresInOrder(raiz,0,false);
+                    if(!existeArbol()){
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+                    imprimirNombresPreOrden(raiz);
+                }
+
+                case 4 -> {
+                    if(!existeArbol()){
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+                    imprimirNombresInOrden(raiz);
+                }
+
+                case 5 -> {
+                    if(!existeArbol()){
+                        mostrarError("El arbol no ha sido creado");
+                        break;
+                    }
+
+                    imprimirNombresPosOrden(raiz);
+                }
+                case 6 -> {
+                    imprimirNodosHoja(raiz,0);
+                }
+
+                case 7 -> {
+                    imprimirNombresArbol(raiz,0,false);
                 } 
                 
+                case 8 -> {
+                    mostrarEstado("Se eliminaran los siquientes nodos");
+                    imprimirNodosHoja(raiz, 0);
+                    
+                    mostrarEstado("Eliminando nodos...");
+                    eliminarNodosHoja(null,raiz);
+
+                    mostrarEstado("Nodos eliminados correctamente");
+                }
 
                 default -> {
                     mostrarError("opcion invalida");
