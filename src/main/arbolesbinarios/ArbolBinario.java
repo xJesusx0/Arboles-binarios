@@ -254,27 +254,23 @@ public class ArbolBinario {
 
     }
 
-    public static void cantidadNodosIzquierdaYDerecha(Nodo nodo,int contadores[]){
-
-        if (!existeArbol()) {
-            mostrarError("El arbol no ha sido creado");
+    public static void cantidadNodosIzquierdaYDerecha(Nodo nodo, int contadores[]) {
+        if (nodo == null) {
             return;
         }
-
-        if(nodo == null){
-            return;
-        }
-
-        if(nodo.nodoIzquierdo != null){
-            contadores[0]++;
-            cantidadNodosIzquierdaYDerecha(nodo.nodoIzquierdo,contadores);
-
-        }
-
-        if(nodo.nodoDerecho != null){
+        
+        if(esMayor(nodo.nombre, raiz.nombre)){
             contadores[1]++;
-            cantidadNodosIzquierdaYDerecha(nodo.nodoDerecho,contadores);
+
         }
+        if(esMenor(nodo.nombre, raiz.nombre)){
+            contadores[0]++;
+        }
+        
+        cantidadNodosIzquierdaYDerecha(nodo.nodoIzquierdo, contadores);
+        
+        cantidadNodosIzquierdaYDerecha(nodo.nodoDerecho, contadores);
+        
     }
 
     public static void cantidadNodos(Nodo nodo,int contador[]){
