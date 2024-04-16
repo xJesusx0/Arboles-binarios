@@ -60,7 +60,12 @@ public class ArbolBinario {
             mostrarError("El arbol no ha sido creado");
             return;
         }
-
+        
+        if(esIgual(nombre, nuevoNodo.nombre)){
+            mostrarError("Este nombre ya existe");
+            return; 
+        }
+        
         if (esMenor(nombre, auxiliar.nombre)) {
             if (auxiliar.nodoIzquierdo == null) {
                 auxiliar.nodoIzquierdo = nuevoNodo;
@@ -357,5 +362,27 @@ public class ArbolBinario {
         buscarGrado(grado, nodo.nodoIzquierdo);
         
         buscarGrado(grado, nodo.nodoDerecho);
+    }
+
+    public static void actualizarNodo(Nodo nodo,String nombre ,int saldo){
+
+        if (!existeArbol()) {
+            mostrarError("El arbol no ha sido creado");
+            return;
+        }
+
+        if(nodo == null){
+            return;
+        }
+
+        if(esIgual(nodo.nombre, nombre)){
+            mostrarEstado("Actualizando nodo");
+            nodo.saldo = saldo;
+            mostrarEstado("nodo actualizado");
+            return;
+        }
+
+        actualizarNodo(nodo.nodoIzquierdo, nombre,saldo);
+        actualizarNodo(nodo.nodoDerecho, nombre,saldo);
     }
 }
