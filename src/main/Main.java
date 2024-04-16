@@ -129,7 +129,14 @@ public class Main {
                     int grado = inputInt("Ingrese el grado a buscar");
                     buscarGrado(grado, raiz);
                 }
+                    
+                case 14 ->{
+                    String nombre = input("Ingrese el nombre a modificar");
+                    int nuevoSaldo = inputInt("Ingrese el nuevo saldo");
 
+                    actualizarNodo(raiz, nombre, nuevoSaldo);
+                    
+                }
                 default -> {
                     mostrarError("opcion invalida");
                 }
