@@ -29,7 +29,8 @@ public class Mensajes {
                             "Ver cuantos nodos hay a la izquierda y a la derecha",
                             "Buscar por nombre",
                             "Buscar por saldo",
-                            "Buscar por grado"
+                            "Buscar por grado",
+                            "Actualizar un nodo"
                         };
 
     public static void menu(){
