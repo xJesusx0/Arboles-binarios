@@ -61,7 +61,7 @@ public class ArbolBinario {
             return;
         }
         
-        if(esIgual(nombre, nuevoNodo.nombre)){
+        if(esIgual(nombre, auxiliar.nombre)){
             mostrarError("Este nombre ya existe");
             return; 
         }
