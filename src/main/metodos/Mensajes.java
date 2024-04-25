@@ -30,7 +30,8 @@ public class Mensajes {
                             "Buscar por nombre",
                             "Buscar por saldo",
                             "Buscar por grado",
-                            "Actualizar un nodo"
+                            "Actualizar un nodo",
+                            "Eliminar un nodo"
                         };
 
     public static void menu(){

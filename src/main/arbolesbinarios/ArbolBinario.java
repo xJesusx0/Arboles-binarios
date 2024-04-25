@@ -376,4 +376,71 @@ public class ArbolBinario {
         actualizarNodo(nodo.nodoIzquierdo, nombre,saldo);
         actualizarNodo(nodo.nodoDerecho, nombre,saldo);
     }
+
+    public static boolean esHoja(Nodo nodo){
+        return nodo.nodoDerecho == null && nodo.nodoIzquierdo == null;
+    }
+
+    public static void eliminarNombre(String nombre, Nodo nodo, Nodo padre) {
+        if (nodo == null) {
+            return;
+        }
+    
+        if (esIgual(nombre, nodo.nombre)) {
+
+            if (esHoja(nodo)) {
+                
+                if (padre.nodoIzquierdo == nodo) {
+                    padre.nodoIzquierdo = null;
+                } 
+
+                if(padre.nodoDerecho == nodo){
+                    padre.nodoDerecho = null;
+                }
+
+                nodo = null;
+                
+                return;
+            } 
+            Nodo auxiliarPadre = nodo;
+
+            if (nodo.nodoIzquierdo != null) {
+                Nodo maxIzquierdo = nodo;
+
+                while (maxIzquierdo.nodoDerecho != null) {
+                    auxiliarPadre = maxIzquierdo;
+                    maxIzquierdo = maxIzquierdo.nodoDerecho;
+                }
+
+                nodo.nombre = maxIzquierdo.nombre;
+                nodo.saldo = maxIzquierdo.saldo;
+                nodo.grado = maxIzquierdo.grado;
+
+                auxiliarPadre.nodoDerecho = null;
+                maxIzquierdo = null;
+
+                return;
+
+            } 
+
+            if(nodo.nodoIzquierdo == null) {
+                Nodo minDerecho = nodo;
+
+                while (minDerecho.nodoIzquierdo != null) {
+                    auxiliarPadre = minDerecho;
+                    minDerecho = minDerecho.nodoIzquierdo;
+                }
+
+                nodo.nombre = minDerecho.nombre;
+                nodo.saldo = minDerecho.saldo;
+                nodo.grado = minDerecho.grado;
+
+                auxiliarPadre.nodoIzquierdo = null;
+                minDerecho = null;
+                return;
+            }
+        }
+        eliminarNombre(nombre, nodo.nodoIzquierdo, nodo);
+        eliminarNombre(nombre, nodo.nodoDerecho, nodo);
+    }     
 }

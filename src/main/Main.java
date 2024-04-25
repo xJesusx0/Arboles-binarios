@@ -137,6 +137,17 @@ public class Main {
                     actualizarNodo(raiz, nombre, nuevoSaldo);
                     
                 }
+
+                case 15 ->{
+                    if(!existeArbol()){
+                        mostrarAviso("El arbol no existe");
+                        break;
+                    }
+
+                    String nombre = input("Ingrese el nombre a eliminar");
+                    eliminarNombre(nombre, raiz, raiz);
+                }
+                //Comentario
                 default -> {
                     mostrarError("opcion invalida");
                 }
