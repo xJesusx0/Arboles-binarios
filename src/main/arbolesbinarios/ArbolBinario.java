@@ -387,60 +387,58 @@ public class ArbolBinario {
         }
     
         if (esIgual(nombre, nodo.nombre)) {
-
+    
             if (esHoja(nodo)) {
-                
+    
                 if (padre.nodoIzquierdo == nodo) {
                     padre.nodoIzquierdo = null;
-                } 
-
-                if(padre.nodoDerecho == nodo){
+                } else if (padre.nodoDerecho == nodo) {
                     padre.nodoDerecho = null;
                 }
-
+    
                 nodo = null;
-                
                 return;
-            } 
-            Nodo auxiliarPadre = nodo;
+            } else {
+                Nodo auxiliarPadre = nodo;
+                Nodo auxiliar = nodo;
 
-            if (nodo.nodoIzquierdo != null) {
-                Nodo maxIzquierdo = nodo;
-
-                while (maxIzquierdo.nodoDerecho != null) {
-                    auxiliarPadre = maxIzquierdo;
-                    maxIzquierdo = maxIzquierdo.nodoDerecho;
+                if (nodo.nodoIzquierdo != null) {
+                    auxiliar = nodo.nodoIzquierdo;
+    
+                    while (auxiliar.nodoDerecho != null) {
+                        auxiliarPadre = auxiliar;
+                        auxiliar = auxiliar.nodoDerecho;
+                    }
+    
+                } else {
+                    System.out.println("e");
+                    auxiliar = nodo.nodoDerecho;
+    
+                    while (auxiliar.nodoIzquierdo != null) {
+                        auxiliarPadre = auxiliar;
+                        auxiliar = auxiliar.nodoIzquierdo;
+                    }
                 }
 
-                nodo.nombre = maxIzquierdo.nombre;
-                nodo.saldo = maxIzquierdo.saldo;
-                nodo.grado = maxIzquierdo.grado;
+                nodo.nombre = auxiliar.nombre;
+                nodo.saldo = auxiliar.saldo;
+                nodo.grado = auxiliar.grado;
 
-                auxiliarPadre.nodoDerecho = null;
-                maxIzquierdo = null;
-
-                return;
-
-            } 
-
-            if(nodo.nodoIzquierdo == null) {
-                Nodo minDerecho = nodo;
-
-                while (minDerecho.nodoIzquierdo != null) {
-                    auxiliarPadre = minDerecho;
-                    minDerecho = minDerecho.nodoIzquierdo;
+                if(auxiliarPadre.nodoDerecho == auxiliar){
+                    auxiliarPadre.nodoDerecho = null;
                 }
 
-                nodo.nombre = minDerecho.nombre;
-                nodo.saldo = minDerecho.saldo;
-                nodo.grado = minDerecho.grado;
+                if(auxiliarPadre.nodoIzquierdo == auxiliar){
+                    auxiliarPadre.nodoIzquierdo = null;
+                }
 
-                auxiliarPadre.nodoIzquierdo = null;
-                minDerecho = null;
+                auxiliar = null;
+
                 return;
             }
         }
         eliminarNombre(nombre, nodo.nodoIzquierdo, nodo);
         eliminarNombre(nombre, nodo.nodoDerecho, nodo);
-    }     
+    }
+       
 }

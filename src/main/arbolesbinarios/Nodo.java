@@ -11,6 +11,11 @@ public class Nodo {
     public Nodo nodoDerecho = null;
 
     public static void imprimirNodo(Nodo nodo){
+
+        if(nodo == null){
+            return;
+        }
+
         System.out.print(green("[ "));
 
         System.out.print("Nombre: " + nodo.nombre + ", ");
@@ -23,7 +28,6 @@ public class Nodo {
         }
 
         System.out.print(green(" ]"));
-
         System.out.println("");
     }
 
